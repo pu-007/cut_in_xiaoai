@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "cut-in-xiaoai"
+version = "0.0.1"
+description = ""
+authors = ["pu-007 <pu.007@qq.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+miservice = "^2.0.1"
+screeninfo = "^0.8.1"
+paho-mqtt = "^1.6.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
