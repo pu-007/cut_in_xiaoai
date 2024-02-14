@@ -2,19 +2,26 @@ from typing import Callable
 import paho.mqtt.client as mqtt
 import logging
 from time import time
-from os import system as run
 from os import chdir
 from pathlib import Path
 
-chdir(str(Path(__file__).parents[1]))
-Path("./logs").mkdir(exist_ok=True)
+# functions for string commands
+from os import system as run
 
 
 class Bafa(mqtt.Client):
     def __init__(
         self, client_id: str, commands_table: dict[str, str | Callable]
     ) -> None:
-        logging.basicConfig(filename=f"logs/bafa-{time()}.log", level=logging.INFO)
+        chdir(str(Path(__file__).parents[2]))
+        Path("./logs").mkdir(exist_ok=True)
+        logging.basicConfig(
+            filename="logs/bafa.log",
+            level=logging.INFO,
+            format="%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S",
+        )
+        logging.basicConfig()
         super().__init__(client_id)
         self.commands_table = commands_table
         self.username_pw_set("userName", "passwd")

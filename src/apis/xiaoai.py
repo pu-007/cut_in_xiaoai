@@ -2,6 +2,8 @@
 # -*- coding: UTF-8 -*-
 import json
 
+# TODO: use newest API like xiao_gpt
+
 
 class XiaoAIBase(object):
     # (fieldName, fieldType, isRequired)
