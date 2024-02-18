@@ -7,6 +7,9 @@ from pathlib import Path
 
 # functions for string commands
 from os import system as run
+from utils import monitor_switch
+from utils import keyboard
+from utils import player
 
 
 class Bafa(mqtt.Client):
