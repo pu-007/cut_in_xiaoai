@@ -1,18 +1,21 @@
-[tool.poetry]
-name = "cut-in-xiaoai"
-version = "0.0.1"
-description = ""
-authors = ["pu-007 <pu.007@qq.com>"]
-license = "MIT"
+[project]
+name = "cut_in_xiaoai"
+version = "0.2.1"
+description = "Default template for PDM package"
+authors = [
+    {name = "pu-007", email = "pu.007@qq.com"},
+]
+dependencies = [
+    "paho-mqtt>=2.0.0",
+]
+requires-python = ">=3.11"
 readme = "README.md"
-
-[tool.poetry.dependencies]
-python = "^3.11"
-miservice = "^2.0.1"
-screeninfo = "^0.8.1"
-paho-mqtt = "^1.6.1"
-
+license = {text = "MIT"}
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+[tool.pdm]
+distribution = true
