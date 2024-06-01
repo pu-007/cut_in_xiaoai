@@ -1,6 +1,4 @@
 from subprocess import run, Popen
-from pyautogui import press, hotkey
-import screeninfo
 
 from random import choice
 from pathlib import Path
@@ -34,24 +32,35 @@ class Player:
 
 class Keyboard:
 
+    def __init__(self):
+        from pyautogui import press, hotkey
+
+        self.press = press
+        self.hotkey = hotkey
+
     @wrapper
     def space(self):
-        press("space")
+        self.press("space")
 
     @wrapper
     def esc(self):
-        press("esc")
+        self.press("esc")
 
     @wrapper
     def close(self):
-        hotkey("shift", "alt", "esc")
+        self.hotkey("shift", "alt", "esc")
 
     @wrapper
     def fullscreen(self):
-        hotkey("alt", "enter")
+        self.hotkey("alt", "enter")
 
 
 class Monitor:
+
+    def __init__(self):
+        from screeninfo import get_monitors
+
+        self.get_monitors = get_monitors
 
     @wrapper
     def PC(self):
@@ -75,7 +84,7 @@ class Monitor:
 
     @wrapper
     def switch(self):
-        if screeninfo.get_monitors()[0].width == 1920:
+        if self.get_monitors()[0].width == 1920:
             self.TV()
         else:
             self.PC()
