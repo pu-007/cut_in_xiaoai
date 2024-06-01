@@ -85,9 +85,9 @@ class Monitor:
     @wrapper
     def switch(self):
         if self.get_monitors()[0].width == 1920:
-            self.TV()
+            run(["displayswitch.exe", "4"])
         else:
-            self.PC()
+            run(["displayswitch.exe", "1"])
 
 
 class Power:
