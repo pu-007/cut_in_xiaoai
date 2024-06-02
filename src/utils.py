@@ -21,19 +21,34 @@ def wrapper(func):
 class Player:
 
     def __init__(self, player_path):
-        assert Path(player_path).exists()
+        assert Path(player_path).is_file()
         self.player_path = player_path
 
-    @wrapper
-    def play(self, file_path):
+    def _play(self, file_path):
         Popen([self.player_path, file_path])
 
     @wrapper
-    def random_play(self, video_list, ignore=[]):
-        video_list = [
-            video for video in Path(video_list).iterdir() if video.name not in ignore
-        ]
-        self.play(choice(video_list))
+    def play(self, file_path):
+        self._play(file_path)
+
+    @wrapper
+    def random_play(self, video_dir, ignore=[], recursive=False, pattern="*"):
+
+        if recursive:
+            video_list = [
+                str(video)
+                for video in Path(video_dir).rglob(pattern)
+                if video.name not in ignore
+                and video.parent.name not in ignore
+                and not video.is_dir()
+            ]
+        else:
+            video_list = [
+                str(video)
+                for video in Path(video_dir).glob(pattern)
+                if video.name not in ignore
+            ]
+        self._play(choice(video_list))
 
 
 class Keyboard:
@@ -95,8 +110,9 @@ class Power:
     def reboot(self):
         run(["shutdown", "-r", "-t", "0"])
 
-    def WOL(self):
-        run(["wol", "08:BF:B8:A6:7C:E2"])
+    @wrapper
+    def WOL(self, MAC):
+        run(["wol", MAC])
 
     def hibernate(self):
         # use `powercfg -hibernate off` to sleep(S3) into memory, or you'll hibernate(S4) into disk

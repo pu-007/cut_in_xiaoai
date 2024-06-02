@@ -7,15 +7,21 @@ create `config.py` in `src`
 ```python
 # use built-in functions
 import utils
+# client_id of Bafa Cloud
 client_id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
+# initialize the utils you need
 power = utils.Power()
 monitor = utils.Monitor()
 keyboard = utils.Keyboard()
-player = utils.Player(r"C:\Users\Administrator\scoop\apps\mpv-git\current\mpv.exe")
+player = utils.Player("<your_video_player_command>")
+# or you can custom your own utils
+@utils.wrapper
+def func(): ...
 
 commands_table = {
-    "on": power.WOL,  # wake computer on another server
+    # wake computer on another server
+    "on": power.WOL("<your_mac_address>"),
     "off": power.shutdown,
     "on#1": power.reboot,
     "on#2": monitor.copy,
