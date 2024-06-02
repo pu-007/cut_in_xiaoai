@@ -1,4 +1,5 @@
 from subprocess import run, Popen
+from functools import wraps
 
 from random import choice
 from pathlib import Path
@@ -6,10 +7,15 @@ from pathlib import Path
 
 def wrapper(func):
 
-    def inner(*args, **kwargs):
-        return lambda: func(*args, **kwargs)
+    def pass_args(*args, **kwargs):
 
-    return inner
+        @wraps(func)
+        def pass_excutable():
+            func(*args, **kwargs)
+
+        return pass_excutable
+
+    return pass_args
 
 
 class Player:
@@ -38,19 +44,15 @@ class Keyboard:
         self.press = press
         self.hotkey = hotkey
 
-    @wrapper
     def space(self):
         self.press("space")
 
-    @wrapper
     def esc(self):
         self.press("esc")
 
-    @wrapper
     def close(self):
         self.hotkey("shift", "alt", "esc")
 
-    @wrapper
     def fullscreen(self):
         self.hotkey("alt", "enter")
 
@@ -62,27 +64,22 @@ class Monitor:
 
         self.get_monitors = get_monitors
 
-    @wrapper
     def PC(self):
         # switch to PC
         run(["displayswitch.exe", "1"])
 
-    @wrapper
     def copy(self):
         # copying mode
         run(["displayswitch.exe", "2"])
 
-    @wrapper
     def extend(self):
         # copying mode
         run(["displayswitch.exe", "3"])
 
-    @wrapper
     def TV(self):
         # switch to TV
         run(["displayswitch.exe", "4"])
 
-    @wrapper
     def switch(self):
         if self.get_monitors()[0].width == 1920:
             run(["displayswitch.exe", "4"])
@@ -92,19 +89,15 @@ class Monitor:
 
 class Power:
 
-    @wrapper
     def shutdown(self):
         run(["shutdown", "-s", "-t", "0"])
 
-    @wrapper
     def reboot(self):
         run(["shutdown", "-r", "-t", "0"])
 
-    @wrapper
     def WOL(self):
         run(["wol", "08:BF:B8:A6:7C:E2"])
 
-    @wrapper
     def hibernate(self):
         # use `powercfg -hibernate off` to sleep(S3) into memory, or you'll hibernate(S4) into disk
         run(["rundll32.exe", "powrprof.dll,SetSuspendState"])
