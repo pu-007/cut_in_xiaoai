@@ -12,7 +12,7 @@ class Bafa(mqtt.Client):
         chdir(str(Path(__file__).parents[2]))
         Path("./logs").mkdir(exist_ok=True)
         logging.basicConfig(
-            filename=f"logs/bafa-{strftime('%Y%m%d-%H%M%S')}.log",
+            filename=f"logs/{strftime('%Y%m%d')}.log",
             level=logging.INFO,
             format="%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s",
             datefmt="%Y-%m-%d %H:%M:%S",
