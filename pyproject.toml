@@ -2,17 +2,11 @@
 name = "cut_in_xiaoai"
 version = "0.1.0"
 description = "Default template for PDM package"
-authors = [
-    {name = "pu-007", email = "pu.007@qq.com"},
-]
-dependencies = [
-    "paho-mqtt>=2.1.0",
-    "pyautogui>=0.9.54",
-    "screeninfo>=0.8.1",
-]
+authors = [{ name = "pu-007", email = "pu.007@qq.com" }]
+dependencies = ["paho-mqtt>=2.1.0", "pyautogui>=0.9.54", "screeninfo>=0.8.1"]
 requires-python = "==3.12.*"
 readme = "README.md"
-license = {text = "MIT"}
+license = { text = "MIT" }
 
 
 [tool.pdm]
