@@ -1,4 +1,4 @@
-from subprocess import run, Popen
+from subprocess import run, Popen, PIPE
 from functools import wraps
 
 from random import choice
@@ -111,8 +111,11 @@ class Power:
         run(["shutdown", "-r", "-t", "0"])
 
     @wrapper
-    def WOL(self, MAC):
-        run(["wol", MAC])
+    def WOL(self, MAC, interface):
+        if run(["which wol"], shell=True, stdout=PIPE, stderr=PIPE).returncode == 0:
+            run(["wol", MAC])
+        else:
+            run(["etherwake", "-i", interface, MAC])
 
     def hibernate(self):
         # use `powercfg -hibernate off` to sleep(S3) into memory, or you'll hibernate(S4) into disk
