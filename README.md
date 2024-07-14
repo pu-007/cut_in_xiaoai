@@ -1,22 +1,26 @@
 # cut_in_xiaoai
 
-## config
+## Usage
 
-create `config.py` in `src`
+run `python /path/to/src`
+
+## Config
+
+create `src/config.py`
 
 ```python
 # use built-in functions
-import utils
+import modules
 # client_id of Bafa Cloud
 client_id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
-# initialize the utils you need
-power = utils.Power()
-monitor = utils.Monitor()
-keyboard = utils.Keyboard()
-player = utils.Player("<your_video_player_command>")
-# or you can custom your own utils
-@utils.wrapper
+# initialize the modules you need
+power = modules.Power()
+monitor = modules.Monitor()
+keyboard = modules.Keyboard()
+player = modules.Player("<your_video_player_command>")
+# or you can custom your own modules
+@modules.wrapper
 def func(): ...
 
 commands_table = {
@@ -37,3 +41,7 @@ commands_table = {
     "on#12": power.hibernate,
 }
 ```
+
+## References
+
+- [xiaogpt](https://github.com/yihong0618/xiaogpt?tab=readme-ov-file)
