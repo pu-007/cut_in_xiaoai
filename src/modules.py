@@ -3,6 +3,7 @@ from functools import wraps
 
 from random import choice
 from pathlib import Path
+from typing import Callable
 
 
 def wrapper(func):
@@ -53,11 +54,12 @@ class Player:
 
 class Keyboard:
 
-    def __init__(self):
+    def __init__(self, MODKEY="altleft"):
         from pyautogui import press, hotkey
 
         self.press = press
         self.hotkey = hotkey
+        self.modkey = MODKEY
 
     def space(self):
         self.press("space")
@@ -66,40 +68,50 @@ class Keyboard:
         self.press("esc")
 
     def close(self):
-        self.hotkey("shift", "alt", "esc")
+        self.hotkey(self.modkey, "shift", "esc")
 
     def fullscreen(self):
-        self.hotkey("alt", "enter")
+        self.hotkey(self.modkey, "f")
+
+    def redraw(self):
+        self.hotkey(self.modkey, "shift", "r")
 
 
 class Monitor:
 
-    def __init__(self):
+    def __init__(self, hook):
         from screeninfo import get_monitors
 
         self.get_monitors = get_monitors
+        self.hook = hook
 
     def PC(self):
         # switch to PC
         run(["displayswitch.exe", "1"])
+        self.hook("PC")
 
     def copy(self):
         # copying mode
         run(["displayswitch.exe", "2"])
+        self.hook("copy")
 
     def extend(self):
         # copying mode
         run(["displayswitch.exe", "3"])
+        self.hook("exten")
 
     def TV(self):
         # switch to TV
         run(["displayswitch.exe", "4"])
+        self.hook("TV")
 
-    def switch(self):
-        if self.get_monitors()[0].width == 1920:
+    @wrapper
+    def switch(self, default_width: int):
+        if self.get_monitors()[0].width == default_width:
             run(["displayswitch.exe", "4"])
         else:
             run(["displayswitch.exe", "1"])
+        self.hook("switch")
 
 
 class Power:
