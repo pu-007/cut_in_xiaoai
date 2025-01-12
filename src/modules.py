@@ -1,4 +1,5 @@
 from subprocess import run, Popen, PIPE
+import os
 from functools import wraps
 
 from random import choice
@@ -79,7 +80,7 @@ class Keyboard:
 
 class Monitor:
 
-    def __init__(self, hook):
+    def __init__(self, hook: Callable):
         from screeninfo import get_monitors
 
         self.get_monitors = get_monitors
@@ -87,30 +88,30 @@ class Monitor:
 
     def PC(self):
         # switch to PC
-        run(["displayswitch.exe", "1"])
+        os.system("displayswitch.exe 1")
         self.hook("PC")
 
     def copy(self):
         # copying mode
-        run(["displayswitch.exe", "2"])
+        os.system("displayswitch.exe 2")
         self.hook("copy")
 
     def extend(self):
-        # copying mode
-        run(["displayswitch.exe", "3"])
+        # extending mode
+        os.system("displayswitch.exe 3")
         self.hook("exten")
 
     def TV(self):
         # switch to TV
-        run(["displayswitch.exe", "4"])
+        os.system("displayswitch.exe 4")
         self.hook("TV")
 
     @wrapper
     def switch(self, default_width: int):
         if self.get_monitors()[0].width == default_width:
-            run(["displayswitch.exe", "4"])
+            os.system("displayswitch.exe 4")
         else:
-            run(["displayswitch.exe", "1"])
+            os.system("displayswitch.exe 1")
         self.hook("switch")
 
 
