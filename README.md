@@ -14,17 +14,18 @@ import modules
 # client_id of Bafa Cloud
 client_id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
-# initialize the modules you need
-power = modules.Power()
-monitor = modules.Monitor()
-keyboard = modules.Keyboard()
-player = modules.Player("<your_video_player_command>")
-# or you can custom your own modules
+# you can custom your own modules
 @modules.wrapper
 def func(): ...
 
 def MonitorHook(mode: str):
     pass
+
+# initialize the modules you need
+power = modules.Power()
+monitor = modules.Monitor(hook=MonitorHook)
+keyboard = modules.Keyboard()
+player = modules.Player("<your_video_player_command>")
 
 commands_table = {
     # wake computer on another server
