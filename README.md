@@ -48,3 +48,4 @@ commands_table = {
 ## References
 
 - [xiaogpt](https://github.com/yihong0618/xiaogpt?tab=readme-ov-file)
+- [xiaomusic](https://github.com/hanxi/xiaomusic)
