@@ -1,5 +1,9 @@
 # cut_in_xiaoai
 
+WOL 功能现在可以使用 open-xiaoai 项目的 server 来实现。
+
+而其他功能可以考虑增加一个新的服务端，替换掉巴法云。或者整体重构，与 open-xiaoai server 通信。
+
 ## Usage
 
 run `python /path/to/src`
